@@ -1,7 +1,7 @@
 import sendrequest as req
 import utils.logs as logs
 import os
-import urlparse
+import urllib.parse
 
 from itertools import islice
 from utils.logger import logger
@@ -52,7 +52,7 @@ def redirection_post_method(url,method,headers,body,scanid):
                     post_req = req.api_request(url, "POST", headers, temp_body)
                     if str(post_req.status_code)[0] == '3':
                         if post_req.headers['Location'].startswith(redirection_url) is True:
-                            print "%s[Medium] {0} is vulnerable to open redirection%s".format(url)% (api_logger.Y, api_logger.W)
+                            print ("%s[Medium] {0} is vulnerable to open redirection%s".format(url)% (api_logger.Y, api_logger.W))
                             logs.logging.info("%s is vulnerable to open redirection",url)
                             attack_result = { "id" : 12, "scanid" : scanid, "url" : url, "alert": "Open redirection", "impact": "Medium", "req_headers": headers, "req_body":body, "res_headers": post_req.headers ,"res_body": "NA"}
                             dbupdate.insert_record(attack_result)
@@ -78,7 +78,7 @@ def redirection_get_uri(url,method,headers,body,scanid):
                     fuzz_req = req.api_request(redirect_url, "GET", headers)
                     if str(fuzz_req.status_code)[0] == '3':
                         if fuzz_req.headers['Location'].startswith(redirection_url) is True:
-                            print "%s[Medium] {0} is vulnerable to open redirection%s".format(url)% (api_logger.Y, api_logger.W)
+                            print ("%s[Medium] {0} is vulnerable to open redirection%s".format(url)% (api_logger.Y, api_logger.W))
                             logs.logging.info("%s is vulnerable to open redirection",redirect_url)
                             attack_result = { "id" : 12, "scanid" : scanid, "url" : redirect_url, "alert": "Open redirection", "impact": "Medium", "req_headers": headers, "req_body":body, "res_headers": fuzz_req.headers ,"res_body": "NA"}
                             dbupdate.insert_record(attack_result)
@@ -99,7 +99,7 @@ def fuzz_url(url,method,headers,body,scanid):
         fuzz_req = req.api_request(target_url, "GET", headers)
         if str(fuzz_req.status_code)[0] == '3':
             if fuzz_req.headers['Location'].startswith(redirection_url) is True:
-                print "%s[ Medium ] {0} is vulnerable to open redirection%s".format(url)% (api_logger.Y, api_logger.W)
+                print ("%s[ Medium ] {0} is vulnerable to open redirection%s".format(url)% (api_logger.Y, api_logger.W))
                 logs.logging.info("%s is vulnerable to open redirection",url)
                 attack_result = { "id" : 12, "scanid" : scanid, "url" : target_url, "alert": "Open redirection", "impact": "Medium", "req_headers": headers, "req_body":body, "res_headers": fuzz_req.headers ,"res_body": "NA"}
                 dbupdate.insert_record(attack_result)

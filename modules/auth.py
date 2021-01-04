@@ -11,13 +11,13 @@ try:
     import requests
     requests.packages.urllib3.disable_warnings()
 except:
-    print "[-]Failed to import requests module"
+    print ("[-]Failed to import requests module")
 
 sys.path.append('../')
 
 from utils.db import Database_update
 from utils.config import get_value,get_allvalues
-from Cookie import SimpleCookie
+from http.cookies import SimpleCookie
 from core.login import APILogin
 
 dbupdate = Database_update()
@@ -54,7 +54,7 @@ def session_fixation(url,method,headers,body,scanid):
 			logs.logging.info("Logout request %s %s %s",url, logout_headers,logout_body)
 			logout_req = req.api_request(url,method,logout_headers,logout_body)
 			if logout_req == None or str(logout_req.status_code)[0] == '4' or str(logout_req.status_code)[0] == '5':
-				print "%s[!]Failed to logout. Session fixation attack won't be tested. Check log file for more information.%s"% (api_logger.Y, api_logger.W)
+				print ("%s[!]Failed to logout. Session fixation attack won't be tested. Check log file for more information.%s"% (api_logger.Y, api_logger.W))
 				return
 			# Try to relogin and check if the application is serving the previous session
 			login_url,login_method,login_headers,login_body = login_data['loginurl'],login_data['loginmethod'], login_data['loginheaders'] ,login_data['loginbody']
@@ -114,7 +114,7 @@ def auth_check(url,method,headers,body,scanid=None):
 													})
 
 								dbupdate.insert_record(attack_result)
-								print "%s[+]{0} is vulnerable to broken Authentication and session management %s ".format(url)% (api_logger.R, api_logger.W)
+								print ("%s[+]{0} is vulnerable to broken Authentication and session management %s ".format(url)% (api_logger.R, api_logger.W))
 								return
 
 					session_fixation(url,method,temp_headers,body,scanid)
@@ -136,7 +136,7 @@ def auth_check(url,method,headers,body,scanid=None):
 							"res_body" : brokenauth_request.text
 							})
 			dbupdate.insert_record(attack_result)
-			print "%s[+]{0} is vulnerable to broken Authentication and session management %s ".format(url)% (api_logger.R, api_logger.W)
+			print ("%s[+]{0} is vulnerable to broken Authentication and session management %s ".format(url)% (api_logger.R, api_logger.W))
 			# Test for session fixation
 			session_fixation(url,method,updated_headers,body,scanid)
 			return

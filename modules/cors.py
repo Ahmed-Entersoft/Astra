@@ -3,9 +3,12 @@ import time
 import utils.logger as logger
 import utils.logs as logs
 import base64
+import sys 
+import os
+sys.path.append(os.path.abspath("/home/van/Astra/modules"))
 import sendrequest as req
 
-from urlparse import urlparse
+from urllib.parse import urlparse
 from utils.db import Database_update
 
 
@@ -71,7 +74,7 @@ def cors_main(url,method,headers,body,scanid=None):
 			option_response = req.api_request(url, "OPTIONS", temp_headers)
 			result = cors_check(origin,option_response.headers)
 			if result:	
-				print "%s[+]{0} is vulnerable to cross domain attack %s ".format(url)% (api_logger.G, api_logger.W)
+				print ("%s[+]{0} is vulnerable to cross domain attack %s ".format(url)% (api_logger.G, api_logger.W))
 				attack_result = {"id" : 1, "scanid" : scanid, "url" : url, "alert": "CORS Misconfiguration", "impact": result['impact'], "req_headers": temp_headers, "req_body" : body, "res_headers": option_response.headers, "res_body" : "NA"}
 				dbupdate.insert_record(attack_result)
 				break

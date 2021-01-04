@@ -1,10 +1,9 @@
 import utils.logs as logs
 import smtplib
 import socket
-
 from utils.config import get_value
-from email.MIMEMultipart import MIMEMultipart
-from email.MIMEText import MIMEText
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
 
 class send_email:
     def __init__(self):
@@ -24,7 +23,7 @@ class send_email:
             self.server = smtplib.SMTP(self.host)
             return True
         except Exception as e:
-            print "Failed to connect to SMTP server",e
+            print ("Failed to connect to SMTP server",e)
             logs.logging.info("Failed to connect to SMTP server"+str(e))
             return False
 

@@ -1,7 +1,7 @@
 import requests
 import os
-from urlparse import urlparse
-import urlparse
+from urllib.parse import urlparse
+import urllib.parse
 from utils.db import Database_update
 import sendrequest as req
 
@@ -38,7 +38,7 @@ def crlf_post_method(uri,method,headers,body,scanid=None):
                 if "CRLF-Test" in name:
                     attack_result = { "id" : 13, "scanid" : scanid, "url" : uri, "alert": "CRLF injection", "impact": "High", "req_headers": headers, "req_body": temp_body, "res_headers": crlf_post_request.headers ,"res_body": crlf_post_request.text}
                     dbupdate.insert_record(attack_result)
-                    print "[+]{0} is vulnerable to CRLF injection".format(uri)
+                    print ("[+]{0} is vulnerable to CRLF injection".format(uri))
                     return
 
 
@@ -59,7 +59,7 @@ def crlf_get_uri_method(uri,method,headers,scanid=None):
                 if "CRLF-Test" in name:
                     attack_result = { "id" : 13, "scanid" : scanid, "url" : parsed_uri, "alert": "CRLF injection", "impact": "High", "req_headers": headers, "req_body":"NA", "res_headers": crlf_get_method.headers ,"res_body": crlf_get_method.text}
                     dbupdate.insert_record(attack_result)
-                    print "[+]{0} is vulnerable to CRLF injection".format(parsed_uri)
+                    print ("[+]{0} is vulnerable to CRLF injection".format(parsed_uri))
                     return
 
 
@@ -74,7 +74,7 @@ def crlf_get_url_method(uri,headers,scanid=None):
             if "CRLF-Test" in name:
                 attack_result = { "id" : 13, "scanid" : scanid, "url" : parsed_uri, "alert": "CRLF injection", "impact": "High", "req_headers": headers, "req_body":"NA", "res_headers": crlf_get_method.headers ,"res_body": crlf_get_method.text}
                 dbupdate.insert_record(attack_result)
-                print "[+]{0} is vulnerable to CRLF injection".format(parsed_uri)
+                print ("[+]{0} is vulnerable to CRLF injection".format(parsed_uri))
                 return
 
 

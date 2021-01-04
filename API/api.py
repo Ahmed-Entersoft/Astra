@@ -9,7 +9,7 @@ import threading
 import logging
 import requests
 import socket
-import urlparse
+from urlparse import urlparse
 import re
 
 from dbconnection import db_connect
@@ -35,7 +35,7 @@ from jinja2 import utils
 SCRIPT_PATH= os.path.split(os.path.realpath(__file__))[0]
 sys.path.append(os.path.join(SCRIPT_PATH,'..'))
 # import scan_single_api, scan_postman_collection
-from astra import *
+#from astra import *
 
 app = Flask(__name__, template_folder='../Dashboard/templates', static_folder='../Dashboard/static')
 
@@ -92,7 +92,7 @@ def start_scan():
             try:
                 db.scanids.insert({"scanid" : scanid, "name" : name, "url" : url})
             except:
-                print "Failed to update DB"
+                print ("Failed to update DB")
         else:
             msg = {"status" : "Failed"}
     
@@ -137,7 +137,7 @@ def fetch_records(scanid):
             try:
                 data =  ast.literal_eval(json.dumps(data))
             except Exception as e:
-                print "Falied to parse",e
+                print ("Falied to parse",e)
             
             try:
                 if data['id'] == "NA":
@@ -235,7 +235,7 @@ def scan_postman():
             else:
                 ip_result = 0
         except:
-            print "Missing Arugument or invalid IP address!"
+            print ("Missing Arugument or invalid IP address!")
             ip_result = 0
 
 

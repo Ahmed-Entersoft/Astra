@@ -108,5 +108,5 @@ def rate_limit(url,method,headers,body,scanid=None):
 					attack_result = brute_force(url,method,headers,body,attack_params,scanid)
 					dbupdate.insert_record(attack_result)
 	except:
-		print "Failed to test rate limit"
+		print ("Failed to test rate limit")
 					

@@ -1,8 +1,8 @@
 import os
-import urlparse
+import urllib.parse
 import sendrequest as req
 import utils.logs as logs
-import urlparse
+import urllib.parse
 import time
 import urllib
 
@@ -97,7 +97,7 @@ def xss_http_headers(url,method,headers,body,scanid=None):
             if host_header_xss.text.find(decoded_payload) != -1:
                 impact = "Low"
                 logs.logging.info("%s is vulnerable to XSS",url)
-                print "%s[{0}] {1} is vulnerable to XSS%s".format(impact,url)% (api_logger.G, api_logger.W)
+                print ("%s[{0}] {1} is vulnerable to XSS%s".format(impact,url)% (api_logger.G, api_logger.W))
                 attack_result = { "id" : 11, "scanid" : scanid, "url" : url, "alert": "Cross Site Scripting", "impact": impact, "req_headers": headers, "req_body":body, "res_headers": host_header_xss.headers ,"res_body": host_header_xss.text}
                 dbupdate.insert_record(attack_result)
                 break
@@ -116,7 +116,7 @@ def xss_http_headers(url,method,headers,body,scanid=None):
         if ref_header_xss.text.find(decoded_payload) != -1:
             impact = check_xss_impact(temp_headers)
             logs.logging.info("%s is vulnerable to XSS",url)
-            print "%s[{0}] {1} is vulnerable to XSS via referer header%s".format(impact,url)% (api_logger.G, api_logger.W)
+            print ("%s[{0}] {1} is vulnerable to XSS via referer header%s".format(impact,url)% (api_logger.G, api_logger.W))
             attack_result = { "id" : 11, "scanid" : scanid, "url" : url, "alert": "Cross Site Scripting via referer header", "impact": impact, "req_headers": temp_headers, "req_body":body, "res_headers": ref_header_xss.headers ,"res_body": ref_header_xss.text}
             dbupdate.insert_record(attack_result)
             return
@@ -152,7 +152,7 @@ def xss_get_url(url,method,headers,body,scanid=None):
         if xss_request_uri.text.find(decoded_payload) != -1:
             impact = check_xss_impact(xss_request_uri.headers)
             logs.logging.info("%s is vulnerable to XSS",url)
-            print "%s[{0}] {1} is vulnerable to XSS%s".format(impact,url)% (api_logger.G, api_logger.W)
+            print ("%s[{0}] {1} is vulnerable to XSS%s".format(impact,url)% (api_logger.G, api_logger.W))
             attack_result = { "id" : 11, "scanid" : scanid, "url" : url, "alert": "Cross Site Scripting", "impact": impact, "req_headers": headers, "req_body":body, "res_headers": xss_request_url.headers ,"res_body": xss_request_url.text}
             dbupdate.insert_record(attack_result)
                 
@@ -181,7 +181,7 @@ def xss_get_uri(url,method,headers,body,scanid=None):
                         if xss_request.text.find(decoded_payload) != -1:
                             impact = check_xss_impact(xss_request.headers)
                             logs.logging.info("%s is vulnerable to XSS",url)
-                            print "%s[{0}] {1} is vulnerable to XSS%s".format(impact,url)% (api_logger.G, api_logger.W)
+                            print ("%s[{0}] {1} is vulnerable to XSS%s".format(impact,url)% (api_logger.G, api_logger.W))
                             if db_update is not True:
                                 attack_result = { "id" : 11, "scanid" : scanid, "url" : xss_url, "alert": "Cross Site Scripting", "impact": impact, "req_headers": headers, "req_body":body, "res_headers": xss_request.headers ,"res_body": xss_request.text}
                                 dbupdate.insert_record(attack_result)

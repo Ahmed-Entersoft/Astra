@@ -1,0 +1,10 @@
+Failed to start sqlmap
+XXE: Server started.
+API URL for login is : None
+API URL for login is : None
+Failed to start sqlmap
+XXE: Server started.
+Exception from sendrequest Invalid URL '': No schema supplied. Perhaps you meant http://?
+API URL for login is : None
+Failed to start sqlmap
+XXE: Server started.

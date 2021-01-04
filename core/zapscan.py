@@ -24,7 +24,7 @@ try:
     import requests
     requests.packages.urllib3.disable_warnings()
 except:
-    print "[-]Failed to import requests module"
+    print ("[-]Failed to import requests module")
 
 
 class zap_scan:
@@ -87,7 +87,7 @@ class zap_scan:
                     impact = zap_alerts['alerts'][alert_id]['risk']
                     description = zap_alerts['alerts'][alert_id]['description']
                     solution = zap_alerts['alerts'][alert_id]['solution']
-                    print "%s[+]{0} is vulnerable to {1}%s".format(url,alert)% (self.api_logger.G, self.api_logger.W)
+                    print ("%s[+]{0} is vulnerable to {1}%s".format(url,alert)% (self.api_logger.G, self.api_logger.W))
                     try:
                         self.update_db(scanid,url,alert,impact,description,solution,messageId)
                     except Exception as e:
@@ -115,7 +115,7 @@ class zap_scan:
             try:
                 access_url = requests.get(url,headers=Headers,proxies=self.proxy,cookies=cookies)
             except requests.exceptions.RequestException as e:
-                print e
+                print( e)
 
         elif method.upper() == 'POST':
             try:
@@ -148,7 +148,7 @@ class zap_scan:
                 try:
                     scan_id = json.loads(start_ascan.text)['scan']
                     if int(scan_id) >= 0:
-                        print "[+]Active Scan Started Successfully"
+                        print ("[+]Active Scan Started Successfully")
                         self.check_scanalerts(url,scan_id,scanid)              
                 except:
                     pass
